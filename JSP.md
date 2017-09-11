@@ -697,3 +697,21 @@ node.js :  brew install node
 5、 jspm install react
 6、jspm install react-dom
 ```
+
+安装React Native
+
+```
+1、安装homeBrow /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+2、安装Node.js ： brew install node
+3、安装React Native ：npm install -g react-native-cli
+4、初始化项目 ： react-native init firstApp //firstApp是项目名称
+```
+
+问题：
+
+```
+1、初始化项目报错 找不到bundleID，在package.json里面，看到自己的react-native的版本是0.45.*以后的，出现这个错误
+这是因为是0.45官方有重大改动，无法使用react-native init项目来启动，
+直接react-native init mydemo --version 0.44.3指定之前的版本就可以了；
+2、webstrom preference打不开，是因为汉化的问题，删掉汉化包就可以了；
+```
