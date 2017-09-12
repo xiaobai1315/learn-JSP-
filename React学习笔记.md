@@ -88,7 +88,7 @@ export default class CommentBox extends React.Component{
 }
 ```
 
-###4、从爸爸获取数据
+###4、属性props
 给CommentList添加评论数据
 
 ```
@@ -132,4 +132,85 @@ export default class CommentList extends React.Component{
         )
     }
 }
+```
+
+###5、从爸爸获取数据
+
+```
+//index.js
+//假设 comment 数据是从服务器获取的
+var comment = [
+    {"auther":"xiaobai", "data":"1分钟前", "text":"你好"},
+    {"auther":"xiaohong", "data":"2分钟前", "text":"你好"},
+];
+
+//给CommentBox 添加data属性，将 comment数据传递给CommentBox
+ReactDOM.render(<CommentBox data={comment}/>,
+    document.getElementById('root'));
+      
+      
+//CommentBox
+export default class CommentBox extends React.Component{
+    render() {
+        return(
+            <div className="ui commentBox">
+                <h1>评论</h1>
+                <div className="ui devider"></div>
+                
+                //为 CommentList 添加data属性，并将上层传递下来的data属性 传递给CommentList
+                <CommentList data={this.props.data}/>
+                <CommentForm/>
+            </div>
+        )
+    }
+}
+
+
+//CommentList
+export default class CommentList extends React.Component{
+    render(){
+			
+		//获取上层传下来的data数据
+        let comments = this.props.data.map(comment =>{
+            return (
+            
+                //将data数据解析，赋值给CommentNode的属性
+                <CommentNode auther={comment.auther} data={comment.data}>
+                    {comment.text}
+                </CommentNode>
+            );
+        });
+
+        return(
+            <div className={"ui commentForm"}>
+                {comments}
+            </div>
+        )
+    }
+}
+
+//CommentNode 获取各个属性并显示
+export default class CommentNode extends React.Component{
+    render(){
+        return(
+            <div className={'ui comment node'}>
+                <div className={'content'}>
+                    <span className={'auther'}>{this.props.auther}</span>
+                </div>
+                <div className={'metadata'}>
+                    <span className={'data'}>{this.props.data}</span>
+                </div>
+                <div className={'text'}>{this.props.children}</div>
+            </div>
+        )
+    }
+}
+```
+
+###6、组件状态state、setState
+state是组件的私有属性，可以通过this.state访问组件的state；this.setState设置组件的state，组件的状态改变后组件会自动更新；
+
+```
+//安装jQuery 
+ jspm install jquery
 ```
