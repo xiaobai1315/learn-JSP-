@@ -214,3 +214,67 @@ state是组件的私有属性，可以通过this.state访问组件的state；thi
 //安装jQuery 
  jspm install jquery
 ```
+//CommentBox 从上层得到需要显示的数据，传递给CommentList显示，同时传递回调函数给CommentForm,CommentForm中给按钮添加点击事件，获取用户输入的文本框内容，通过回调函数回传给CommentForm，CommentFrom自动刷新表单；
+
+```
+//CommentBox
+export default class CommentBox extends React.Component{
+	constructor(props){
+		super(props);	//调用父类方法
+		this.state = {data:[]};	//初始化CommentBox的state,state是一个对象；
+		
+		this.setState({data:this.props.data});//将上层传递过来的data数据赋值给status属性；
+	}
+}
+
+//传递给CommentForm的回调函数
+onSubmitComment(comment){
+	var currentComment = this.state.data;
+	var newComment = currentComment.concat(comment);
+	this.setState({data:newComment});
+}
+
+render(){
+	return(
+		<div className="ui commentBox">
+                <h1>评论</h1>
+                <div className="ui devider"></div>
+                <CommentList data={this.state.data}></CommentList>
+                //CommentForm添加回调属性
+                <CommentForm submitEvent={this.onSubmitComment.bind(this)}</CommentForm>
+            </div>
+	)
+	
+}
+
+
+//CommentForm
+export default class CommentForm extends React.Component{
+    render(){
+        return(
+            <form className={"ui commentForm"} onSubmit={this.handleSubmit.bind(this)}>
+            //ref 用于获取控件输入的值
+                <div className={"field"}>
+                    <input type={"text"} placeholder={"姓名"} ref='auther'/>
+                </div>
+                <div className={"field"}>
+                    <input type={"text"} placeholder={"评论"} ref='text'/>
+                </div>
+                <button type={"submit"} className={"ui blue button"}>
+                    添加评论
+                </button>
+            </form>
+        )
+    }
+}
+
+handleSubmit(event){
+	//获取文本框输入的内容
+	var auther = this.refs.auther.value,
+		text = this.refs.text.value;
+		
+	//调用上层传递的回调函数，将数据传给上层
+	this.props.submitEvent({auther,text});
+}
+
+```
