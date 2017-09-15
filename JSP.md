@@ -162,6 +162,54 @@ a.toExponential() //"2.34234234234234e+14"
 如果省略了该参数，则调用方法 toString()，而不是把数字转换成十进制的值。
 ```
 
+###array/MAp/Set创建及遍历
+
+```
+var arr = ['a', 'b', 'c'];
+//遍历方法1：
+for(item of arr){
+    console.log(item);  // a b c d e
+}
+
+//遍历方法2：
+//数组的forEach方法中的回调函数的参数依次是：数组元素、元素下标、数组本身
+arr.forEach((item, index, _arr)=>{
+
+    console.log(`item=${item} ,index=${index} _arr=${_arr}`);
+    
+    //item=a ,index=0 _arr=a,b,c,d,e
+    //item=b ,index=1 _arr=a,b,c,d,e
+    //item=c ,index=2 _arr=a,b,c,d,e
+    //item=d ,index=3 _arr=a,b,c,d,e
+    //item=e ,index=4 _arr=a,b,c,d,e
+});
+
+//map 就是 OC 中的字典
+var map = new Map([['name','xiaobai'],['age',20]]);
+
+//清空map
+map.clear();
+
+//删除map中某一个键值对
+map.delete('name');
+
+//遍历map,map的 forEach回调方法的参数依次是：值、键、map本身；
+map.forEach((value, key, _map)=>{
+    console.log(`value=${value}, key=${key}, _map=${_map}`);
+});
+
+
+var set = new Set(['a', 'b', 'c']);
+
+//添加元素
+set.add('e');
+
+//遍历set,set的 forEach回调方法的参数依次是：值、值、set本身；
+set.forEach((value, samevalue, _set)=>{
+    console.log(`value=${value}, samevalue=${samevalue}, _set=${_set}`);
+});
+```
+
 ###创建方法
 ```
 //方式1：
