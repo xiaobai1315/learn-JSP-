@@ -278,3 +278,17 @@ handleSubmit(event){
 }
 
 ```
+
+###7、react-router
+
+```
+安装命令：
+npm install react-router --save
+npm install react-router-dom --save
+```
+
+```
+//遇到的问题：
+1、新版本导入react-router 是从 react-router-dom中导入的
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+```
